@@ -23,7 +23,7 @@ $MeHend = array(
 );
 
 foreach($MeHend as $key => $val){
-	if(!defined ($key)){
+	if(!defined($key)){
 		define($key, $val);
 	}
 }
