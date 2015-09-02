@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+   #開啟rewrite功能
+   RewriteEngine on
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-l
+   RewriteRule ^(.*)$ load.php/$1 [QSA,PT,L]
+</IfModule>
+<Files ~ "^\.(htaccess|htpasswd)$">
+deny from all
+</Files>
+DirectoryIndex load.php
+order deny,allow
