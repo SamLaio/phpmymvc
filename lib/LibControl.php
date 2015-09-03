@@ -5,6 +5,7 @@ class LibControl {
 	public $Tools;
 	public $FnName;
 
+
 	function __construct() {
 		$this->View = new LibView;
 		$this->Tools = new libTools;
@@ -17,6 +18,9 @@ class LibControl {
 		}
 	}
 
+	public function Url($Str){
+		$this->View->Url = $Str;
+	}
 	public function Unfind(){
 		// $this->View->SetUrl('Index');
 		$this->View->ShowPage(array('head','Unfind','foot'));
