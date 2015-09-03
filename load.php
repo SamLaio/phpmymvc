@@ -22,6 +22,9 @@ include_once 'lib/LibControl.php';
 include_once 'lib/LibView.php';
 include_once 'lib/LibTools.php';
 include_once 'lib/LibModel.php';
+include_once 'lib/LibCache.php';
+
+
 // include_once 'lib/LibBoot.php';
 LibBoot($url);
 
@@ -100,9 +103,22 @@ function LibBoot($url) {
 		}
 	}
 	$SetFunction = $url[1];
+
+	/*Cache*/
+	$Cache = new LibCache;
+	$Cache->Check($url);
+	$File = $Cache->ret;
+	$Cache = null;
+	if($File){
+		include_once $File;
+		exit;
+	}
+	/*Cache*/
+
 	/*Call $control->$SetFunction()*/
 	include_once "control/$control.php";
 	$control = new $control;
+	$control->Url(implode($url));
 	if(isset($url[2])){
 		$control->{$SetFunction}($url[2]);
 		/* Js(obj) -> getJs('Jquery'); */

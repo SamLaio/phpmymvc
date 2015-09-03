@@ -51,8 +51,8 @@ class LibModel {
 			);
 		}
 		if ($this->dbtype == 'sqlite') {
-			$this->dbname = 'lib/'.$this->dbname;
-			$link = new PDO("sqlite:" . $this->dbname);
+			$Db_path = 'lib/'.$this->dbname;
+			$link = new PDO("sqlite:" . $Db_path);
 		}
 		/*test link add by Sam 20140805*/
 		if($link){

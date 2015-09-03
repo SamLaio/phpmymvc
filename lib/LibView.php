@@ -6,14 +6,11 @@ class LibView {
 	private $PwPage = false;
 	public $JsLoad = array();
 	private $Lang;
+	public $Url = '';
 	function __construct($url=false) {
 		if($url){
 			$this->SetUrl($url);
 		}
-		// include_once 'control/Lang.php';
-		// $this->Lang = new Lang;
-		// $this->Lang = $this->Lang->GetFace();
-		// print_r($this->Lang);
 	}
 
 	public function SetUrl($url){
@@ -21,7 +18,7 @@ class LibView {
 		$this->Tools = new LibTools;
 	}
 
-	public function SetPage($page = 'index'){
+	public function SetPage($page = 'Index'){
 		if(is_array($page)){
 			foreach($page as $val){
 				if($val == 'head'){
@@ -67,8 +64,21 @@ class LibView {
 			if($this->PwPage){
 				$this->Tools->PwEnCode($this->PwPage);
 			}
+			if(!$InData){
+				ob_start();
+			}
 			foreach($this->PageArr as $toPage){
 				include_once $toPage;
+			}
+			if(!$InData){
+				// echo $_SERVER['PHP_SELF'];
+				$file = 'Tmp/'.md5(date('Y-m-d-H-i-s').$this->Url).'.html';
+				$fp = fopen($file,"w");
+				fwrite($fp,ob_get_contents());
+				fclose($fp);
+				ob_end_flush();
+				$Cache = new LibCache;
+				$Cache->Save(['url'=>$this->Url,'file'=>$file]);
 			}
 		}
 	}
