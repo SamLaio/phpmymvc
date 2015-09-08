@@ -1,21 +1,24 @@
 <?php
 class LibView {
-	private $path = 'view';
-	private $PageArr = array();
+	private $path;
+	private $PageArr;
 	private $Tools;
-	private $PwPage = false;
-	public $JsLoad = array();
+	private $PwPage;
+	public $JsLoad;
 	private $Lang;
-	public $Url = '';
+	public $Url;
 	function __construct($url=false) {
-		if($url){
-			$this->SetUrl($url);
-		}
+		$this->path = 'view';
+		$this->PageArr = array();
+		$this->PwPage = false;
+		$this->JsLoad = array();
+		$this->Lang;
+		$this->Url = '';
+		$this->Tools = new LibTools;
 	}
 
 	public function SetUrl($url=''){
 		$this->path .= '/'.$url;
-		$this->Tools = new LibTools;
 	}
 
 	public function SetPage($page = 'Index'){
@@ -38,32 +41,9 @@ class LibView {
 				$this->PageArr[] = $this->path.'/'.$val.".html";
 			}
 		}
-		// echo $this->path;
-		// print_r($this->PageArr);exit;
-		/*if(is_array($page)){
-			foreach($page as $val){
-				if($val == 'head'){
-					$this->SetOther($val);
-				}
-				if($val != 'foot' and $val != 'head'){
-					$this->SetPage($val);
-				}
-				if($val == 'foot'){
-					$this->SetOther($val);
-				}
-			}
-		}else{
-
-			// foreach(SCANDIR($this->path) as $value){
-			// 	if (substr($value, 0, strrpos($value, ".")) == $page){
-			// 		$this->PageArr[] = $this->path.'/'.$value;
-			// 	}
-			// }
-			 $this->PageArr = array('head', 'Index'); 
-		}*/
 	}
 
-	public function ShowPage($page = false,$InData=false){
+	public function ShowPage($page = false,$InData = false){
 		if($page){
 			$this->SetPage($page);
 		}
@@ -88,6 +68,7 @@ class LibView {
 				fwrite($fp,ob_get_contents());
 				fclose($fp);
 				ob_end_flush();
+
 				$Cache = new LibCache;
 				$Cache->Save(['url'=>$this->Url,'file'=>$file]);
 			}
