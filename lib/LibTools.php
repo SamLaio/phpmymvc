@@ -1,13 +1,13 @@
 <?php
 class LibTools {
 	/*尋找檔案是否在資料夾中($isFile是指是不是單純只有指檔案)*/
-	public function FileCk($FileArr, $FeileName, $isFile = true){
+	public function FileCk($FileArr, $FileName, $isFile = true){
 		$ret = 'error';
 		foreach($FileArr as $value){
-			if (substr($value, 0, strrpos($value, ".")) == $FeileName and $isFile){
+			if (substr($value, 0, strrpos($value, ".")) == $FileName and $isFile){
 				$ret = substr($value, 0, strrpos($value, "."));
 			}
-			if($value == $FeileName and !$isFile){
+			if($value == $FileName and !$isFile){
 				$ret = $value;
 			}
 		}
@@ -16,19 +16,15 @@ class LibTools {
 
 	public function ControlFnCheck(){
 		$_SESSION['ControlArr'] = array();
-		foreach(SCANDIR('control') as $val){
-			if (preg_match("/.php/i", $val)) {
-				include_once "control/$val";
-				$val = explode('.php', $val);
-				$val = $val[0];
-				$tmp = new $val;
-				$_SESSION['ControlArr'][$val] = array();
-				foreach(get_class_methods($tmp) as $FunctionName){
-					if($FunctionName != '__construct' and $FunctionName != '__destruct'){
-						$_SESSION['ControlArr'][$val][$FunctionName] = 1;
-					}
+		$Obj = glob('control/*.php');
+		foreach($Obj as $ObjV){
+			include_once $ObjV;
+			$ObjV = str_replace('control/', '', $ObjV);
+			$ObjV = explode('.php', $ObjV);
+			foreach (get_class_methods($ObjV[0]) as $FunctionName) {
+				if($FunctionName != '__construct' and $FunctionName != '__destruct'){
+					$_SESSION['ControlArr'][$ObjV[0]][$FunctionName] = true;
 				}
-				$tmp = null;
 			}
 		}
 	}

@@ -4,9 +4,7 @@ class LibControl {
 	public $View;
 	public $Tools;
 	public $FnName;
-
-
-	function __construct() {
+	function __construct($ObjName=false) {
 		$this->View = new LibView;
 		$this->Tools = new libTools;
 
@@ -16,11 +14,11 @@ class LibControl {
 		if(isset($_POST) and count($_POST) != 0){
 			$this->InData['post'] = $this->Tools->ValEncode($_POST);
 		}
+		if($ObjName){
+			$this->View->SetUrl($ObjName);
+		}
 	}
 
-	public function Url($Str){
-		$this->View->Url = $Str;
-	}
 	public function Unfind(){
 		// $this->View->SetUrl('Index');
 		$this->View->ShowPage(array('head','Unfind','foot'));

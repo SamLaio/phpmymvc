@@ -13,13 +13,34 @@ class LibView {
 		}
 	}
 
-	public function SetUrl($url){
+	public function SetUrl($url=''){
 		$this->path .= '/'.$url;
 		$this->Tools = new LibTools;
 	}
 
 	public function SetPage($page = 'Index'){
 		if(is_array($page)){
+			foreach($page as $val){
+				if($val != 'head' and $val != 'foot'){
+					if(file_exists($this->path.'/'.$val.".html")){
+						$this->PageArr[] = $this->path.'/'.$val.".html";
+					}
+				}else{
+					if(file_exists($this->path.'/'.$val.".html")){
+						$this->PageArr[] = $this->path.'/'.$val.".html";
+					}else{
+						$this->PageArr[] = 'view/'.$val.".html";
+					}
+				}
+			}
+		}else{
+			if(file_exists($this->path.'/'.$val.".html")){
+				$this->PageArr[] = $this->path.'/'.$val.".html";
+			}
+		}
+		// echo $this->path;
+		// print_r($this->PageArr);exit;
+		/*if(is_array($page)){
 			foreach($page as $val){
 				if($val == 'head'){
 					$this->SetOther($val);
@@ -32,23 +53,14 @@ class LibView {
 				}
 			}
 		}else{
-			foreach(SCANDIR($this->path) as $value){
-				if (substr($value, 0, strrpos($value, ".")) == $page){
-					$this->PageArr[] = $this->path.'/'.$value;
-				}
-			}
-			/* $this->PageArr = array('head', 'Index'); */
-		}
-	}
 
-	public function SetOther($page){
-		// print_r(SCANDIR($this->path));
-		$ck = $this->Tools->FileCk(SCANDIR($this->path),$page);
-		if($ck != 'error'){
-			$this->PageArr[] = "$this->path/$page.html";
-		}else{
-			$this->PageArr[] = "view/$page.html";
-		}
+			// foreach(SCANDIR($this->path) as $value){
+			// 	if (substr($value, 0, strrpos($value, ".")) == $page){
+			// 		$this->PageArr[] = $this->path.'/'.$value;
+			// 	}
+			// }
+			 $this->PageArr = array('head', 'Index'); 
+		}*/
 	}
 
 	public function ShowPage($page = false,$InData=false){
@@ -71,8 +83,7 @@ class LibView {
 				include_once $toPage;
 			}
 			if(!$InData){
-				// echo $_SERVER['PHP_SELF'];
-				$file = 'Tmp/'.md5(date('Y-m-d-H-i-s').$this->Url).'.html';
+				$file = 'cache/'.md5(date('Y-m-d-H-i-s').$this->Url);
 				$fp = fopen($file,"w");
 				fwrite($fp,ob_get_contents());
 				fclose($fp);

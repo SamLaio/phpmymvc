@@ -11,16 +11,11 @@ class LibCache extends LibModel{
 		$this->ret = false;
 		if($this->count != 0){
 			$arr = $arr[0];
-			// if($arr['up_date'] == $arr['cache_date']){
 			if(file_exists($arr['path'])){
 				$this->ret = $arr['path'];
 			}else{
-				// echo $this->Del($this->table,"`url`='$url'");
 				$this->Query($this->Del($this->table,"`url`='$url'"));
 			}
-			// echo $this->Del($this->table,"url='$url'");
-			// exit;
-			// }
 		}
 	}
 	public function Save($arr){
