@@ -12,8 +12,6 @@ if(isset($UrlBase[1])){
 		$url = explode('/',trim($UrlBase[1],'/'));
 	}
 }
-// $url = (isset($UrlBase[1]) and trim($UrlBase[1],'/') != '')?explode('/', $UrlBase[1]):array();
-// print_r($url);exit;
 /*load config*/
 include_once "config.php";
 
@@ -93,13 +91,15 @@ $control = $url[0];
 $SetFunction = $url[1];
 
 /*Cache*/
-$Cache = new LibCache;
-$Cache->Check($url);
-$File = $Cache->ret;
-$Cache = null;
-if($File){
-	include_once $File;
-	exit;
+if(Cacahe == true){
+	$Cache = new LibCache;
+	$Cache->Check($url);
+	$File = $Cache->ret;
+	$Cache = null;
+	if($File){
+		include_once $File;
+		exit;
+	}
 }
 /*Cache*/
 

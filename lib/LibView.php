@@ -56,21 +56,25 @@ class LibView {
 			if($this->PwPage){
 				$this->Tools->PwEnCode($this->PwPage);
 			}
-			if(!$InData){
-				ob_start();
+			if(Cacahe == true){
+				if(!$InData){
+					ob_start();
+				}
 			}
 			foreach($this->PageArr as $toPage){
 				include_once $toPage;
 			}
-			if(!$InData){
-				$file = 'cache/'.md5(date('Y-m-d-H-i-s').$this->Url);
-				$fp = fopen($file,"w");
-				fwrite($fp,ob_get_contents());
-				fclose($fp);
-				ob_end_flush();
+			if(Cacahe == true){
+				if(!$InData){
+					$file = 'cache/'.md5(date('Y-m-d-H-i-s').$this->Url);
+					$fp = fopen($file,"w");
+					fwrite($fp,ob_get_contents());
+					fclose($fp);
+					ob_end_flush();
 
-				$Cache = new LibCache;
-				$Cache->Save(['url'=>$this->Url,'file'=>$file]);
+					$Cache = new LibCache;
+					$Cache->Save(['url'=>$this->Url,'file'=>$file]);
+				}
 			}
 		}
 	}

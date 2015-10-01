@@ -19,7 +19,9 @@ $MeHend = array(
 //sqlite
 $MeHend = array(
 	'DbType' => 'sqlite',
-	'DbName' => 'mvc.s3db'
+	'DbName' => 'mvc.s3db',
+
+	'Cache' => true
 );
 
 foreach($MeHend as $key => $val){
