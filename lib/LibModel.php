@@ -18,7 +18,7 @@ class LibModel {
 				$this->dbpass = DbPw;
 				$this->dbname = DbName;
 			}else{
-				if(!defined (P_DbHost)){
+				if(defined (P_DbHost)){
 					if($this->CheckDataBaseLink(P_DbHost,3306)){
 						$this->dbhost = P_DbHost;
 						$this->dbuser = P_DbUser;
@@ -196,4 +196,12 @@ class LibModel {
 		return $re;
 	}
 	/*共用函式*/
+}
+$a = 10000;
+$k = rand(1,$a);
+$arr = array();
+for($i = 1; $i < $a; $i++){
+	if($i != $k){
+		$arr[$i]=true;
+	}
 }
