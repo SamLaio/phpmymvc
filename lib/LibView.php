@@ -56,7 +56,7 @@ class LibView {
 			if($this->PwPage){
 				$this->Tools->PwEnCode($this->PwPage);
 			}
-			if(Cacahe == true){
+			if(Cache == true){
 				if(!$InData){
 					ob_start();
 				}
@@ -64,7 +64,7 @@ class LibView {
 			foreach($this->PageArr as $toPage){
 				include_once $toPage;
 			}
-			if(Cacahe == true){
+			if(Cache == true){
 				if(!$InData){
 					$file = 'cache/'.md5(date('Y-m-d-H-i-s').$this->Url);
 					$fp = fopen($file,"w");

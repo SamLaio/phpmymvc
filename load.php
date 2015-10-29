@@ -91,7 +91,7 @@ $control = $url[0];
 $SetFunction = $url[1];
 
 /*Cache*/
-if(Cacahe == true){
+if(Cache == true){
 	$Cache = new LibCache;
 	$Cache->Check($url);
 	$File = $Cache->ret;
@@ -106,7 +106,6 @@ if(Cacahe == true){
 /*Call $control->$SetFunction()*/
 include_once "control/$control.php";
 $control = new $control;
-// echo isset($control->View)?1:2;exit;
 if(isset($control->View)){
 	$control->View->Url = $url[0].$url[1];
 }

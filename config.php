@@ -1,5 +1,6 @@
 <?php
 /*set data base info*/
+
 /*
 //mysql
 $MeHend = array(
@@ -19,11 +20,10 @@ $MeHend = array(
 //sqlite
 $MeHend = array(
 	'DbType' => 'sqlite',
-	'DbName' => 'mvc.s3db',
-
-	'Cache' => true
+	'DbName' => 'mvc.s3db'
 );
 
+$MeHend['Cache'] = false;
 foreach($MeHend as $key => $val){
 	if(!defined($key)){
 		define($key, $val);
