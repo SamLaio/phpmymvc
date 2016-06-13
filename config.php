@@ -16,11 +16,6 @@ $MeHend = array(
 	'P_DbPw' => '',
 	'P_DbName' => 'blueseeds'
 );
-//sqlite
-$MeHend = array(
-	'DbType' => 'sqlite',
-	'DbName' => 'mvc.s3db'
-);
 */
 //sqlite
 $MeHend = array(
